@@ -13,16 +13,19 @@ function drawTable(t, image, context) {
 	for (i = 1; i <= N; i++) {
 		for (j = 1; j <= N; j++) {
 			if (t[i][j] == 1) {
-				context.fillStyle = "rgb(0,0,0)";
+				context.drawImage(image.black, 0, 0, 26, 26, j * 30 - 13, i * 30 - 13, 26, 26);
+				/*context.fillStyle = "rgb(0,0,0)";
 				context.beginPath();
 				context.arc(j * 30, i * 30, 13, 0, Math.PI * 2, true);
-				context.fill();
+				context.fill();*/
 			}
 			if (t[i][j] == 2) {
+				context.drawImage(image.white, 0, 0, 26, 26, j * 30 - 13, i * 30 - 13, 26, 26);
+				/*
 				context.fillStyle = "rgb(255,255,255)";
 				context.beginPath();
 				context.arc(j * 30, i * 30, 13, 0, Math.PI * 2, true);
-				context.fill();
+				context.fill();*/
 			}
 			if (t[i][j] == 3) {
 				context.fillStyle = "rgb(128,128,128)";

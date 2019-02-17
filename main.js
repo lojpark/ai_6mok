@@ -16,6 +16,10 @@ $(document).ready(function () {
 	var image = new Object();
 	image.board = new Image();
 	image.board.src = "image/board.png";
+	image.black = new Image();
+	image.black.src = "image/black.png";
+	image.white = new Image();
+	image.white.src = "image/white.png";
 
 	/* 판 초기화 */
 	var t = new Array();
