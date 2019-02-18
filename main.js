@@ -28,6 +28,10 @@ $(document).ready(function () {
 	image.white = new Image();
 	image.white.src = "image/white.png";
 
+	var audio = new Object();
+	audio.stone1 = new Audio('audio/stone1.mp3');
+	audio.stone2 = new Audio('audio/stone2.mp3');
+
 	/* 판 초기화 */
 	var t = new Array();
 	for (i = 0; i <= N + 1; i++) {
@@ -78,6 +82,8 @@ $(document).ready(function () {
 		rry = ry;
 		rx = Math.floor(mx / 30);
 		ry = Math.floor(my / 30);
+		if (count == 0) audio.stone2.play();
+		if (count == 1) audio.stone1.play();
 
 		drawTable(t, image, context);
 		winlose();
@@ -115,6 +121,7 @@ $(document).ready(function () {
 		if (count == 50 && isPlaying) {
 			count = tick = 0;
 			ai(t, 1);
+			audio.stone2.play();
 			drawTable(t, image, context);
 			winlose();
 		}
