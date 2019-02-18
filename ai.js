@@ -316,13 +316,16 @@ function abp(t, alpha, beta, dep, usp) {
 				usp.x = cand[i].x;
 				usp.y = cand[i].y;
 			}
-			if (dep == top) {
+			if (dep == 0) {
 				t[cand[i].y][cand[i].x] = 1;
 				t[sp.y][sp.x] = 1;
 				rx = cand[i].x;
 				ry = cand[i].y;
+				rrx = sp.x;
+				rry = sp.y;
 			}
 			if (dep == 2 || dep == 3 || dep == 6 || dep == 7) cand[i].v *= -1;
+			if (rrx == 0 && rry == 0 && dep == 0) continue;
 			return cand[i].v;
 		}
 		if (cand[i].v < -80000) {
@@ -335,8 +338,11 @@ function abp(t, alpha, beta, dep, usp) {
 				t[sp.y][sp.x] = 1;
 				rx = cand[i].x;
 				ry = cand[i].y;
+				rrx = sp.x;
+				rry = sp.y;
 			}
 			if (dep == 2 || dep == 3 || dep == 6 || dep == 7) cand[i].v *= -1;
+			if (rrx == 0 && rry == 0 && dep == 0) continue;
 			return cand[i].v;
 		}
 	}
@@ -359,14 +365,6 @@ function abp(t, alpha, beta, dep, usp) {
 	/* Max player */
 	if (dep == 0 || dep == 1 || dep == 4 || dep == 5) {
 		for (i = 1; i <= cn; i++) {
-			/* Cut candidates */
-			if (isHigh && !isLow) {
-				//	if( cand[ i ].v < 900 && alpha > -80000 ) break;
-			}
-			if (isLow && !isHigh) {
-				//	if( cand[ i ].v < -900 ) break;
-			}
-
 			t[cand[i].y][cand[i].x] = 1;
 			value = abp(t, alpha, beta, dep + 1, spc);
 			t[cand[i].y][cand[i].x] = 0;
@@ -391,20 +389,14 @@ function abp(t, alpha, beta, dep, usp) {
 			t[sp.y][sp.x] = 1;
 			rx = cand[index].x;
 			ry = cand[index].y;
+			rrx = sp.x;
+			rry = sp.y;
 		}
 		return alpha;
 	}
 	/* Min player */
 	else {
 		for (i = 1; i <= cn; i++) {
-			/* Cut candidates */
-			if (isHigh && !isLow) {
-				//	if( cand[ i ].v < 900 ) break;
-			}
-			if (isLow && !isHigh) {
-				//	if( cand[ i ].v < -900 ) break;
-			}
-
 			t[cand[i].y][cand[i].x] = 2;
 			value = abp(t, alpha, beta, dep + 1, sp);
 			t[cand[i].y][cand[i].x] = 0;

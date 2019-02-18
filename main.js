@@ -3,6 +3,7 @@ var INF = 2100000000;
 
 var count = 0;
 var rx = 0, ry = 0;
+var rrx = 0, rry = 0;
 
 var hv = new Array();
 
@@ -42,6 +43,8 @@ $(document).ready(function () {
 
 	document.onmousedown = function (e) {
 		t[Math.floor(my / 30)][Math.floor(mx / 30)] = 2;
+		rrx = rx;
+		rry = ry;
 		rx = Math.floor(mx / 30);
 		ry = Math.floor(my / 30);
 

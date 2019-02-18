@@ -14,31 +14,18 @@ function drawTable(t, image, context) {
 		for (j = 1; j <= N; j++) {
 			if (t[i][j] == 1) {
 				context.drawImage(image.black, 0, 0, 26, 26, j * 30 - 13, i * 30 - 13, 26, 26);
-				/*context.fillStyle = "rgb(0,0,0)";
-				context.beginPath();
-				context.arc(j * 30, i * 30, 13, 0, Math.PI * 2, true);
-				context.fill();*/
 			}
 			if (t[i][j] == 2) {
 				context.drawImage(image.white, 0, 0, 26, 26, j * 30 - 13, i * 30 - 13, 26, 26);
-				/*
-				context.fillStyle = "rgb(255,255,255)";
-				context.beginPath();
-				context.arc(j * 30, i * 30, 13, 0, Math.PI * 2, true);
-				context.fill();*/
-			}
-			if (t[i][j] == 3) {
-				context.fillStyle = "rgb(128,128,128)";
-				context.beginPath();
-				context.arc(j * 30, i * 30, 13, 0, Math.PI * 2, true);
-				context.fill();
 			}
 			/* Recent stone */
 			if (i == ry && j == rx) {
-				if (i == ry && j == rx) context.fillStyle = "rgb(255,0,0)";
-				context.beginPath();
-				context.arc(j * 30, i * 30, 4, 0, Math.PI * 2, true);
-				context.fill();
+				context.fillStyle = "rgb(255, 0, 0, 0.75)";
+				context.fillRect(j * 30 - 4, i * 30 - 4, 8, 8);
+			}
+			if (i == rry && j == rrx) {
+				context.fillStyle = "rgb(0, 0, 255, 0.75)";
+				context.fillRect(j * 30 - 4, i * 30 - 4, 8, 8);
 			}
 		}
 	}
