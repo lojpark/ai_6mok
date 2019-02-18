@@ -5,6 +5,9 @@ var count = 0;
 var rx = 0, ry = 0;
 var rrx = 0, rry = 0;
 
+var difficulty = 'Hard';
+var tick = 0;
+
 var hv = new Array();
 
 $(document).ready(function () {
@@ -13,6 +16,9 @@ $(document).ready(function () {
 
 	var i, j;
 	var mx, my;
+	var isPlaying = false;
+	var menu = ['NONE', 'NONE', 'NONE'];
+	var menuList = ['  Hard', 'Medium', '  Easy'];
 
 	var image = new Object();
 	image.board = new Image();
@@ -39,12 +45,33 @@ $(document).ready(function () {
 		var pkey = e || window.event;
 		mx = pkey.pageX + 15;
 		my = pkey.pageY + 15;
+
+		if (250 <= mx && mx <= 380 && 265 <= my && my <= 305) {
+			if (menu[0] == 'NONE') menu[0] = 'OVER';
+		}
+		else menu[0] = 'NONE';
+		if (250 <= mx && mx <= 380 && 315 <= my && my <= 355) {
+			if (menu[1] == 'NONE') menu[1] = 'OVER';
+		}
+		else menu[1] = 'NONE';
+		if (250 <= mx && mx <= 380 && 365 <= my && my <= 405) {
+			if (menu[2] == 'NONE') menu[2] = 'OVER';
+		}
+		else menu[2] = 'NONE';
 	}
 
 	document.onmousedown = function (e) {
+		if (!isPlaying) {
+			if (menu[0] == 'OVER') menu[0] = 'CLICKED';
+			if (menu[1] == 'OVER') menu[1] = 'CLICKED';
+			if (menu[2] == 'OVER') menu[2] = 'CLICKED';
+			return;
+		}
+
 		if (Math.floor(my / 30) < 0 || Math.floor(my / 30) > 19) return;
 		if (Math.floor(mx / 30) < 0 || Math.floor(mx / 30) > 19) return;
 		if (t[Math.floor(my / 30)][Math.floor(mx / 30)] != 0) return;
+		if (count >= 2) return;
 			
 		t[Math.floor(my / 30)][Math.floor(mx / 30)] = 2;
 		rrx = rx;
@@ -62,6 +89,20 @@ $(document).ready(function () {
 		}
 	}
 
+	document.onmouseup = function (e) {
+		if (!isPlaying) {
+			if (menu[0] == 'CLICKED') difficulty = 'Hard';
+			else if (menu[1] == 'CLICKED') difficulty = 'Medium';
+			else if (menu[2] == 'CLICKED') difficulty = 'Easy';
+			else return;
+
+			isPlaying = true;
+			t[10][10] = 1;
+			drawTable(t, image, context);
+			return;
+		}
+	}
+
 	function forceDraw() {
 		drawTable(t, image, context);
 		winlose();
@@ -71,8 +112,8 @@ $(document).ready(function () {
 
 		count++;
 
-		if (count == 100) {
-			count = 0;
+		if (count == 50 && isPlaying) {
+			count = tick = 0;
 			ai(t, 1);
 			drawTable(t, image, context);
 			winlose();
@@ -94,6 +135,7 @@ $(document).ready(function () {
 			context.fillStyle = "rgb(0,0,0)";
 			context.font = "32px helvetica";
 			context.fillText("Black Win!", 235, 28);
+			isPlaying = false;
 			return;
 		}
 
@@ -108,17 +150,60 @@ $(document).ready(function () {
 			context.fillStyle = "rgb(255,255,255)";
 			context.font = "32px helvetica";
 			context.fillText("White Win!", 235, 28);
+			isPlaying = false;
 			return;
 		}
+	}
+
+	function selectOption() {
+		if (isPlaying) return;
+
+		drawTable(t, image, context);
+
+		context.shadowBlur = 4;
+		context.shadowOffsetX = 4;
+		context.shadowOffsetY = 4;
+		context.shadowColor = "rgba(0, 0, 0, 0.5)";
+
+		// Select Difficulty
+		context.fillStyle = "rgb(255, 255, 255, 0.9)";
+		context.fillRect(225, 200, 150, 200);
+		for (i = 0; i < 3; i++) {
+			var offset = 0;
+			context.shadowColor = "rgba(0, 0, 0, 0.5)";
+
+			switch (menu[i]) {
+				case 'NONE':
+					context.fillStyle = "rgb(210, 210, 210)";
+					break;
+				case 'OVER':
+					context.fillStyle = "rgb(150, 150, 150)";
+					break;
+				case 'CLICKED':
+					context.fillStyle = "rgb(150, 150, 150)";
+					offset = 4;
+					context.shadowColor = "rgba(0, 0, 0, 0)";
+					break;
+			}
+			context.fillRect(235 + offset, 250 + i * 50 + offset, 130, 40);
+
+			context.fillStyle = "rgb(0,0,0)";
+			context.font = "22px helvetica";
+			context.shadowColor = "rgba(0, 0, 0, 0)";
+			context.fillText("Difficulty", 260, 232);
+			context.fillText(menuList[i], 262 + offset, 278 + i * 50 + offset);
+		}
+
+		setTimeout(selectOption, 10);
 	}
 
 	function init() {
 		initHeuristic();
 
-		t[10][10] = 1;
-		//ai( t, 1 );
+		selectOption();
 
-		forceDraw();
+		//t[10][10] = 1;
+		//ai( t, 1 );
 	}
 
 	init();

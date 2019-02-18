@@ -1,6 +1,7 @@
 function drawTable(t, image, context) {
 	var i, j;
 
+	context.shadowColor = "rgba(0, 0, 0, 0)";
 	context.drawImage(image.board, 0, 0, 600, 600, 0, 0, 600, 600);
 
 	context.fillStyle = "rgb(0,0,0)";
