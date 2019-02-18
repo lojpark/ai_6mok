@@ -42,6 +42,10 @@ $(document).ready(function () {
 	}
 
 	document.onmousedown = function (e) {
+		if (Math.floor(my / 30) < 0 || Math.floor(my / 30) > 19) return;
+		if (Math.floor(mx / 30) < 0 || Math.floor(mx / 30) > 19) return;
+		if (t[Math.floor(my / 30)][Math.floor(mx / 30)] != 0) return;
+			
 		t[Math.floor(my / 30)][Math.floor(mx / 30)] = 2;
 		rrx = rx;
 		rry = ry;
