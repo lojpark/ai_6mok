@@ -377,7 +377,7 @@ function abp(t, alpha, beta, dep, usp) {
 				index = i;
 			}
 			/* Beta cut-off */
-			if (alpha >= beta || alpha >= 80000 || (difficulty == 'Easy' && tick >= 1000)) {
+			if (alpha >= beta || alpha >= 80000 || (difficulty == 'Medium' && tick >= 3000) || (difficulty == 'Easy' && tick >= 100)) {
 				break;
 			}
 		}
@@ -406,7 +406,7 @@ function abp(t, alpha, beta, dep, usp) {
 				beta = value;
 			}
 			/* Alpha cut-off */
-			if (alpha >= beta || beta <= -80000 || (difficulty == 'Easy' && tick >= 1000)) {
+			if (alpha >= beta || beta <= -80000 || (difficulty == 'Medium' && tick >= 3000) || (difficulty == 'Easy' && tick >= 100)) {
 				break;
 			}
 		}

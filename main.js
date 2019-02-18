@@ -201,9 +201,6 @@ $(document).ready(function () {
 		initHeuristic();
 
 		selectOption();
-
-		//t[10][10] = 1;
-		//ai( t, 1 );
 	}
 
 	init();
