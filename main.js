@@ -5,7 +5,7 @@ var count = 0;
 var rx = 0, ry = 0;
 var rrx = 0, rry = 0;
 
-var difficulty = 'Hard';
+var difficulty = '';
 var tick = 0;
 
 var hv = new Array();

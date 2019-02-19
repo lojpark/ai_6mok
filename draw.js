@@ -30,4 +30,8 @@ function drawTable(t, image, context) {
 			}
 		}
 	}
+	
+	context.fillStyle = "rgb(0,0,0)";
+	context.font = "16px helvetica";
+	context.fillText(difficulty, 4, 18);
 };
